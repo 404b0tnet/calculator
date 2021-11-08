@@ -14,7 +14,7 @@
 mod calculator;
 use calculator::*;
 
-use std::io::{stdin, stdout, Write};
+use std::io::{Write, stdin, stdout};
 
 fn main() {
     // title
@@ -27,22 +27,30 @@ fn main() {
     let mut operator = String::new();
 
     loop {
+
+        // clear strings
+        num1.clear();
+        num2.clear();
+        operator.clear();
+
+
         // get user input
         println!("what is the first number? ");
         read(&mut num1);
+
         println!("what is the second number? ");
         read(&mut num2);
+
         println!("what operation would you like to do? [*+-/]:  ");
         read(&mut operator);
 
-        // clean up input
         let num1: f32 = num1.trim().parse().unwrap();
         let num2: f32 = num2.trim().parse().unwrap();
         let operator: char = operator.trim().chars().next().unwrap();
 
         // check for valid operator
-        let operators = String::from("+-*/");
-        if !operators.contains(operator) {
+        let operator_list = String::from("+-*/");
+        if !operator_list.contains(operator) {
             println!("unknown operator");
             return;
         }
