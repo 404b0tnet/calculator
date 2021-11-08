@@ -11,6 +11,9 @@
 // i128 (-170,141,183,460,469,231,731,687,303,715,884,105,728
 //          => 170,141,183,460,469,231,731,687,303,715,884,105,727)
 
+mod calculator;
+use calculator::*;
+
 use std::io::{stdin, stdout, Write};
 
 fn main() {
@@ -18,7 +21,7 @@ fn main() {
     println!("welcome to the calculator");
     println!("----------");
 
-    // calculation variables
+    // initialize variables
     let mut num1 = String::new();
     let mut num2 = String::new();
     let mut operator = String::new();
@@ -29,7 +32,7 @@ fn main() {
         read(&mut num1);
         println!("what is the second number? ");
         read(&mut num2);
-        println!("what operationg would you like to do? [*+-/]:  ");
+        println!("what operation would you like to do? [*+-/]:  ");
         read(&mut operator);
 
         // clean up input
@@ -37,17 +40,20 @@ fn main() {
         let num2: f32 = num2.trim().parse().unwrap();
         let operator: char = operator.trim().chars().next().unwrap();
 
+        // check for valid operator
         let operators = String::from("+-*/");
         if !operators.contains(operator) {
             println!("unknown operator");
             return;
         }
 
+        // calculate results based on operator
+        let calc = Calculator::new(num1, num2);
         let result = match operator {
-            '+' => num1 + num2,
-            '-' => num1 - num2,
-            '*' => num1 * num2,
-            '/' => num1 / num2,
+            '+' => calc.add(),
+            '-' => calc.subtract(),
+            '*' => calc.multiply(),
+            '/' => calc.divide(),
             _ => panic!("error in operator"),
         };
 
